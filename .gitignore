@@ -1,0 +1,3 @@
+*.pyc
+chaf/settings_local.py
+chaf/settings_prod.py

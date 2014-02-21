@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load bootstrap_pagination %}
+{% block extra_scripts %}
+	<script src="/static/tungwah/js/script.js"></script>
+{% endblock %}
+{% block content %}
+{% include 'tungwah/_header.html' %}
+<div class="row">
+	<div class="col-md-5 col-md-offset-2">
+		{% if content.has_previous or content.has_next %}
+			<p>Page {{ content.number }} of {{ content.paginator.num_pages }}</p>
+			 {% bootstrap_pager content previous_label="&larr; Previous" next_label="Next &rarr;" %}
+		{% endif %}
+		<div class="list-group">
+		{% for issue in content.object_list %}
+			<a class="list-group-item" href="/issues/{{issue.issue_date|date:'c'}}">{{ issue.issue_date|date:"j F Y" }} <span class="badge">{{ issue.num_articles }} articles</span></a>
+		{% endfor %}
+		</div>
+		{% if content.has_previous or content.has_next %}
+			{% bootstrap_paginate content range=5 show_first_last="true" previous_label="&lsaquo;" next_label="&rsaquo;" %}
+		{% endif %}
+	</div>
+	{% include 'tungwah/_sidebar.html' %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+	<div class="col-md-3">
+		<h5>Search articles</h5>
+		<form method="get" action="{% url 'article_list' %}">
+			<div class="input-group">
+		      <input name="q" id="q" type="search" class="form-control"{% if query %} value="{{ query }}"{% endif %}>
+		      <span class="input-group-btn">
+		        <button class="btn btn-primary " type="submit">Search</button>
+		      </span>
+		    </div>
+		
+			{% if num_articles %}
+		    	<p class="small text-muted">{{ num_articles }} articles</p>
+		    {% endif %}
+		    {% if paginator %}
+		    	<p class="small text-muted">{{ paginator.count }} matching articles</p>
+		    {% endif %}
+		    {% if facets %}
+			    <div class="row">
+			    	<div class="col-md-10 col-md-offset-2">
+					    <h6>Sort</h6>
+					    <select name="order_by" id="order_by">
+					    	<option value="">Relevance</option>
+					    	<option {% if request.GET.order_by == 'issue_date' %}selected="selected" {% endif %}value="issue_date">Date</option>
+					    </select>
+					</div>
+				</div>
+			{% endif %}
+	    </form>
+	    {% if facets.fields.year %}
+	    <div class="row">
+	    	<div class="col-md-10 col-md-offset-2">
+			    <h6>Filter by year</h6>
+			    <div class="list-group">
+			    {% for year in facets.fields.year %}
+			    	{% if request.GET.year %}
+			    	<a class="list-group-item active" href="/articles/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
+			    	{% else %}
+			    	<a class="list-group-item" href="/articles/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}&year={{ year.0 }}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
+			    	{% endif %}
+			    {% endfor %}
+				</div>
+			</div>
+		</div>
+	    {% endif %}
+
+	    <h5>Browse issues</h5>
+	    <div class="input-group">
+	      <select class="form-control" name="year" id="year">
+	      	<option value="">All years</option>
+	      	<option>1898</option>
+			<option>1899</option>
+			<option>1900</option>
+			<option>1901</option>
+			<option>1902</option>
+			<option>1903</option>
+			<option>1904</option>
+			<option>1905</option>
+			<option>1906</option>
+			<option>1907</option>
+			<option>1908</option>
+			<option>1909</option>
+			<option>1910</option>
+			<option>1911</option>
+			<option>1912</option>
+			<option>1913</option>
+			<option>1914</option>
+			<option>1915</option>
+			<option>1916</option>
+			<option>1917</option>
+			<option>1918</option>
+			<option>1919</option>
+			<option>1920</option>
+			<option>1921</option>
+			<option>1922</option>
+			<option>1923</option>
+			<option>1924</option>
+			<option>1925</option>
+			<option>1926</option>
+			<option>1927</option>
+			<option>1928</option>
+			<option>1929</option>
+			<option>1930</option>
+			<option>1931</option>
+			<option>1932</option>
+			<option>1933</option>
+			<option>1934</option>
+			<option>1935</option>
+			<option>1936</option>
+			<option>1966</option>
+		  </select>
+	      <span class="input-group-btn">
+	        <button class="btn btn-primary" id="browse" type="button">Browse</button>
+	      </span>
+	    </div>
+	    {% if num_issues%}
+	    	<p class="small text-muted">{{ num_issues }} issues</p>
+	    {% endif %}
+	</div>
