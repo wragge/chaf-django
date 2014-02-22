@@ -4,15 +4,16 @@
 {% endblock %}
 
 {% block content %}
-{% include 'tungwah/_header.html' %}
-<div class="row">
-	<div class="col-md-5 col-md-offset-2">
-		<blockquote>
-		<p>{{ article.description }}</p>
-		<footer>{{ article.issue_date|date:"j F Y" }}, page {{ article.page }} <a href="{% url 'article-view' article.id %}"><span class="glyphicon glyphicon-arrow-right"></span></a></footer>
-		</blockquote>
+<div class="container">
+	{% include 'tungwah/_header.html' %}
+	<div class="row">
+		<div class="col-md-5 col-md-offset-2">
+			<blockquote>
+			<p>{{ article.description }}</p>
+			<footer>{{ article.issue_date|date:"j F Y" }}, page {{ article.page }} <a href="{% url 'article-view' article.id %}"><span class="glyphicon glyphicon-arrow-right"></span></a></footer>
+			</blockquote>
+		</div>
+		{% include 'tungwah/_sidebar.html' %}
 	</div>
-	{% include 'tungwah/_sidebar.html' %}
 </div>
-
 {% endblock %}

@@ -30,7 +30,7 @@ class HomePageView(TemplateView):
 
 class ArticleView(LinkedDataView):
     model = Article
-    path = '/articles/%s'
+    path = '/tungwah/articles/%s'
     template_name = 'tungwah/article'
 
     def make_graph(self, entity):
@@ -51,7 +51,7 @@ class ArticleView(LinkedDataView):
 
 class IssueView(LinkedDataView):
     model = Article
-    path = '/issues/%s'
+    path = '/tungwah/issues/%s'
     template_name = 'tungwah/issue'
 
     def get_item(self, id):
@@ -71,7 +71,7 @@ class IssueView(LinkedDataView):
 
 class ArticleListView(LinkedDataListView):
     model = Article
-    path = '/articles/results'
+    path = '/tungwah/articles/results'
     template_name = 'tungwah/articles'
 
     def make_graph(self, entities):
@@ -91,7 +91,7 @@ class ArticleListView(LinkedDataListView):
 
 class ArticleSearchView(LinkedDataSearchView):
     form_class = ArticleSearchForm
-    path = '/articles/results'
+    path = '/tungwah/articles/results'
     template_name = 'tungwah/articles'
     params = [{'name': 'q', 'default': ''}, {'name': 'page', 'default': 1}, {'name': 'year', 'default': None}, {'name': 'order_by', 'default': None}]
     default_order = 'issue_date'
@@ -100,7 +100,7 @@ class ArticleSearchView(LinkedDataSearchView):
 
 class IssueListView(LinkedDataListView):
     model = Article
-    path = '/issues/{}results'
+    path = '/tungwah/issues/{}results'
     template_name = 'tungwah/issues'
 
     def get(self, request, fmt=None, **kwargs):

@@ -4,33 +4,34 @@
 	<script src="/static/tungwah/js/script.js"></script>
 {% endblock %}
 {% block content %}
-{% include 'tungwah/_header.html' %}
-<div class="row">
-	<div class="col-md-5 col-md-offset-2">
-		{% if content.title %}
-			<h2>{{ content.title }}</h2>
-		{% else %}
-			<h2>{{ content.description|truncatewords:10 }}</h2>
-		{% endif %}
-		<dl class="dl-horizontal">
-			<dt>Date</dt>
-			<dd><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
-			<dt>Page</dt>
-			<dd>{{ content.page }}</dd>
-			{% if content.column %}
-				<dt>Column</dt>
-				<dd>{{ content.page_column }}</dd>
+<div class="container">
+	{% include 'tungwah/_header.html' %}
+	<div class="row">
+		<div class="col-md-5 col-md-offset-2">
+			{% if content.title %}
+				<h2>{{ content.title }}</h2>
+			{% else %}
+				<h2>{{ content.description|truncatewords:10 }}</h2>
 			{% endif %}
-			<dt>Description</dt>
-			<dd>{{ content.description }}</dd>
-			{% if content.source %}
-				<dt>Source</dt>
-				<dd>{{ content.source }}</dd>
-			{% endif %}
-		</dl>
+			<dl class="dl-horizontal">
+				<dt>Date</dt>
+				<dd><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
+				<dt>Page</dt>
+				<dd>{{ content.page }}</dd>
+				{% if content.column %}
+					<dt>Column</dt>
+					<dd>{{ content.page_column }}</dd>
+				{% endif %}
+				<dt>Description</dt>
+				<dd>{{ content.description }}</dd>
+				{% if content.source %}
+					<dt>Source</dt>
+					<dd>{{ content.source }}</dd>
+				{% endif %}
+			</dl>
 
+		</div>
+		{% include 'tungwah/_sidebar.html' %}
 	</div>
-	{% include 'tungwah/_sidebar.html' %}
 </div>
-
 {% endblock %}

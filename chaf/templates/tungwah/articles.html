@@ -4,29 +4,30 @@
 	<script src="/static/tungwah/js/script.js"></script>
 {% endblock %}
 {% block content %}
-{% include 'tungwah/_header.html' %}
-<div class="row">
-	<div class="col-md-5 col-md-offset-2">
-		{% if content.has_previous or content.has_next %}
-			<p>Page {{ content.number }} of {{ paginator.num_pages }}</p>
-			 {% bootstrap_pager content previous_label="&larr; Previous" next_label="Next &rarr;" %}
-		{% endif %}
-		<div class="list-group">
-		{% for article in content.object_list %}
-			<a class="list-group-item" href="{{ article.object.get_absolute_url }}">{% if article.object.title %}
-				{{ article.object.title }}
-			{% else %}
-				{{ article.object.description|truncatewords:20 }}
+<div class="container">
+	{% include 'tungwah/_header.html' %}
+	<div class="row">
+		<div class="col-md-5 col-md-offset-2">
+			{% if content.has_previous or content.has_next %}
+				<p>Page {{ content.number }} of {{ paginator.num_pages }}</p>
+				 {% bootstrap_pager content previous_label="&larr; Previous" next_label="Next &rarr;" %}
 			{% endif %}
-			<br> <span class="text-muted">&ndash; {{ article.object.issue_date|date:"j F Y"}}</span>
-			</a>
-		{% endfor %}
+			<div class="list-group">
+			{% for article in content.object_list %}
+				<a class="list-group-item" href="{{ article.object.get_absolute_url }}">{% if article.object.title %}
+					{{ article.object.title }}
+				{% else %}
+					{{ article.object.description|truncatewords:20 }}
+				{% endif %}
+				<br> <span class="text-muted">&ndash; {{ article.object.issue_date|date:"j F Y"}}</span>
+				</a>
+			{% endfor %}
+			</div>
+			{% if content.has_previous or content.has_next %}
+				{% bootstrap_paginate content range=5 show_first_last="true" previous_label="&lsaquo;" next_label="&rsaquo;" %}
+			{% endif %}
 		</div>
-		{% if content.has_previous or content.has_next %}
-			{% bootstrap_paginate content range=5 show_first_last="true" previous_label="&lsaquo;" next_label="&rsaquo;" %}
-		{% endif %}
+		{% include 'tungwah/_sidebar.html' %}
 	</div>
-	{% include 'tungwah/_sidebar.html' %}
 </div>
-
 {% endblock %}
