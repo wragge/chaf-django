@@ -1,7 +1,7 @@
 $(function() {
 	$("#browse").click(function() {
 		var year = $("#year").val();
-		window.location.href = "/issues/" + year;
+		window.location.href = "/tungwah/issues/" + year;
 	});
 	$("#order_by").change(function() {
 		var href = window.location.href;

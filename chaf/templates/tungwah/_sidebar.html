@@ -33,9 +33,9 @@
 			    <div class="list-group">
 			    {% for year in facets.fields.year %}
 			    	{% if request.GET.year %}
-			    	<a class="list-group-item active" href="/articles/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
+			    	<a class="list-group-item active" href="/tungwah/articles/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
 			    	{% else %}
-			    	<a class="list-group-item" href="/articles/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}&year={{ year.0 }}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
+			    	<a class="list-group-item" href="/tungwah/articles/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}&year={{ year.0 }}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
 			    	{% endif %}
 			    {% endfor %}
 				</div>

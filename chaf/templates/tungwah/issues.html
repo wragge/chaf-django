@@ -14,7 +14,7 @@
 			{% endif %}
 			<div class="list-group">
 			{% for issue in content.object_list %}
-				<a class="list-group-item" href="/issues/{{issue.issue_date|date:'c'}}">{{ issue.issue_date|date:"j F Y" }} <span class="badge">{{ issue.num_articles }} articles</span></a>
+				<a class="list-group-item" href="/tungwah/issues/{{issue.issue_date|date:'c'}}">{{ issue.issue_date|date:"j F Y" }} <span class="badge">{{ issue.num_articles }} articles</span></a>
 			{% endfor %}
 			</div>
 			{% if content.has_previous or content.has_next %}
