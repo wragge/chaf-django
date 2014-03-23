@@ -3,6 +3,19 @@
 {% block extra_scripts %}
 	<script src="/static/tungwah/js/script.js"></script>
 {% endblock %}
+{% block page_title %}The Tung Wah Times{% endblock %}
+{% block meta %}
+	{% if content.title %}
+		<meta name="DCTERMS.title" content="{{ content.title }}">
+	{% else %}
+		<meta name="DCTERMS.title" content="{{ content.description|truncatewords:10 }}">
+	{% endif %}
+	<meta name="DCTERMS.date" content="{{ content.issue_date }}">
+	<meta name="DCTERMS.abstract" content="{{ content.description }}">
+	<meta name="DCTERMS.source" content="Tung Wah Times">
+	<meta name="DCTERMS.type" content="newspaperArticle">
+	<meta name="BIBO.pages" content="{{ content.page }}{% if content.page_column %}, column {{ content.page_column }}{% endif %}">
+{% endblock %}
 {% block content %}
 <div class="container">
 	{% include 'tungwah/_header.html' %}
