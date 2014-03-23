@@ -18,7 +18,7 @@
 				<dd><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
 				<dt>Page</dt>
 				<dd>{{ content.page }}</dd>
-				{% if content.column %}
+				{% if content.page_column %}
 					<dt>Column</dt>
 					<dd>{{ content.page_column }}</dd>
 				{% endif %}
