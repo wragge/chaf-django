@@ -6,6 +6,7 @@ from django.db.models import Count
 from django.views.generic.base import TemplateView
 from django.core.paginator import Paginator
 from isodate import parse_date
+import datetime
 from linkeddata.views import LinkedDataView, LinkedDataListView, LinkedDataSearchView
 from linkeddata.models import *
 from rdflib import Graph
@@ -13,6 +14,12 @@ from rdflib import Namespace, BNode, Literal, RDF, URIRef
 from django_conneg.decorators import renderer
 from chaf.tungwah.models import *
 from chaf.tungwah.forms import *
+
+NEWSPAPERS = {
+    'title': 'Tung Wah Times',
+    'url': 'http://trove.nla.gov.au/version/16567400',
+
+}
 
 
 class HomePageView(TemplateView):
@@ -42,10 +49,24 @@ class ArticleView(LinkedDataView):
             graph.bind(schema.prefix, namespace)
             namespaces[schema.prefix] = namespace
         host_ns = Namespace('http://%s' % (Site.objects.get_current().domain))
-        this_person = URIRef(host_ns[entity.get_absolute_url()])
-        #graph.add((this_person, namespaces['rdf']['type'], namespaces['foaf']['Person']))
-        #graph.add((this_person, namespaces['rdfs']['label'], Literal(str(entity))))
-        #graph.add((this_person, namespaces['foaf']['name'], Literal(str(entity))))
+        this_article = URIRef(host_ns[entity.get_absolute_url()])
+        graph.add((this_article, namespaces['rdf']['type'], namespaces['schema']['NewsArticle']))
+        graph.add((this_article, namespaces['rdfs']['label'], Literal(str(entity))))
+        graph.add((this_article, namespaces['schema']['name'], Literal(str(entity))))
+        graph.add((this_article, namespaces['schema']['description'], Literal(str(entity.description))))
+        graph.add((this_article, namespaces['schema']['printPage'], Literal(str(entity.page))))
+        graph.add((this_article, namespaces['schema']['printColumn'], Literal(str(entity.page_column))))
+        graph.add((this_article, namespaces['schema']['datePublished'], Literal(str(entity.issue_date))))
+        print entity.issue_date
+        if entity.issue_date < datetime.date(1902, 8, 16):
+            this_newspaper = URIRef('http://trove.nla.gov.au/version/16575625')
+            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah News')))
+        else:
+            this_newspaper = URIRef('http://trove.nla.gov.au/version/16567400')
+            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah Times')))
+        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['schema']['Organization']))
+        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
+        graph.add((this_article, namespaces['schema']['provider'], this_newspaper))
         return graph
 
 
