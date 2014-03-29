@@ -18,7 +18,7 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-	{% include 'tungwah/_header.html' %}
+	{% include 'tungwah/_header.html' with child='Article' %}
 	<div class="row">
 		<div class="col-md-5 col-md-offset-2">
 			{% if content.title %}
