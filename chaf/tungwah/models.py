@@ -23,3 +23,4 @@ class Article(models.Model):
 	def get_absolute_url(self):
 		return reverse('article-view', kwargs={'id': self.id})
 
+

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.db.models import Count
 from django.views.generic.base import TemplateView
 from django.core.paginator import Paginator
+from django.template import defaultfilters
 from isodate import parse_date
 import datetime
 from linkeddata.views import LinkedDataView, LinkedDataListView, LinkedDataSearchView
@@ -14,12 +15,6 @@ from rdflib import Namespace, BNode, Literal, RDF, URIRef
 from django_conneg.decorators import renderer
 from chaf.tungwah.models import *
 from chaf.tungwah.forms import *
-
-NEWSPAPERS = {
-    'title': 'Tung Wah Times',
-    'url': 'http://trove.nla.gov.au/version/16567400',
-
-}
 
 
 class HomePageView(TemplateView):
@@ -57,7 +52,6 @@ class ArticleView(LinkedDataView):
         graph.add((this_article, namespaces['schema']['printPage'], Literal(str(entity.page))))
         graph.add((this_article, namespaces['schema']['printColumn'], Literal(str(entity.page_column))))
         graph.add((this_article, namespaces['schema']['datePublished'], Literal(str(entity.issue_date))))
-        print entity.issue_date
         if entity.issue_date < datetime.date(1902, 8, 16):
             this_newspaper = URIRef('http://trove.nla.gov.au/version/16575625')
             graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah News')))
@@ -89,6 +83,36 @@ class IssueView(LinkedDataView):
             return render_to_response(template_name, context, context_instance=RequestContext(request), content_type='text/html')
         else:
             return HttpResponse(content='')
+
+    def make_graph(self, entity):
+        namespaces = {}
+        graph = Graph()
+        schemas = RDFSchema.objects.all()
+        for schema in schemas:
+            namespace = Namespace(schema.uri)
+            graph.bind(schema.prefix, namespace)
+            namespaces[schema.prefix] = namespace
+        host_ns = Namespace('http://%s' % (Site.objects.get_current().domain))
+        this_issue = URIRef(host_ns['/tungwah/issues/{}/'.format(entity['issue'])])
+        f_date = defaultfilters.date(entity['issue'], 'j F Y')
+        if entity['issue'] < datetime.date(1902, 8, 16):
+            this_newspaper = URIRef('http://trove.nla.gov.au/version/16575625')
+            newspaper = 'Tung Wah News'
+            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah News')))
+        else:
+            this_newspaper = URIRef('http://trove.nla.gov.au/version/16567400')
+            newspaper = 'Tung Wah Times'
+            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah Times')))
+        graph.add((this_issue, namespaces['rdf']['type'], namespaces['schema']['CreativeWork']))
+        graph.add((this_issue, namespaces['rdf']['type'], namespaces['dcterms']['Issue']))
+        graph.add((this_issue, namespaces['rdfs']['label'], Literal('{}, {}'.format(newspaper, f_date))))
+        graph.add((this_issue, namespaces['schema']['datePublished'], Literal(str(entity['issue']))))
+        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['schema']['Organization']))
+        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
+        graph.add((this_issue, namespaces['schema']['provider'], this_newspaper))
+        for article in entity['articles']:
+            graph.add((this_issue, namespaces['dcterms']['hasPart'], URIRef(host_ns[article.get_absolute_url()])))
+        return graph
 
 class ArticleListView(LinkedDataListView):
     model = Article
