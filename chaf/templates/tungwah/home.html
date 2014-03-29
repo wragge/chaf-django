@@ -2,6 +2,7 @@
 {% block extra_scripts %}
 	<script src="/static/tungwah/js/script.js"></script>
 {% endblock %}
+{% block page_title %}Tung Wah Newspaper Index{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -9,9 +10,24 @@
 	<div class="row">
 		<div class="col-md-5 col-md-offset-2">
 			<blockquote>
-			<p>{{ article.description }}</p>
-			<footer>{{ article.issue_date|date:"j F Y" }}, page {{ article.page }} <a href="{% url 'article-view' article.id %}"><span class="glyphicon glyphicon-arrow-right"></span></a></footer>
+				<p>{{ article.description }}</p>
+				<footer>{{ article.issue_date|date:"j F Y" }}, page {{ article.page }} <a href="{% url 'article-view' article.id %}"><span class="glyphicon glyphicon-arrow-right"></span></a></footer>
 			</blockquote>
+			<h4>About the index</h4>
+			<p>
+				The Tung Wah Newspaper Index is an English-language index of two Chinese-language newspapers &ndash; the Tung Wah News 東華新報 (1898–1902) and the later Tung Wah Times 東華報 (1902–1936) &ndash; published in Sydney, Australia. The names of people, organisations and places in the index have been transliterated into Mandarin pinyin.
+			</p>
+			<p>
+				The newspapers are among the most important publications in the history of Australia’s Chinese communities. They provide rich resources for the study of Chinese in Australia, for researching events in China and for tracing the history of other Chinese communities around the world.
+			</p>
+			<p>
+				The index was compiled by Dr Liu Luxin for the Chinese Heritage of Australian Federation Project. This was a joint project between La Trobe University, the Chinese Museum and East China Normal University. As part of the project a website containing digital resources related to the history of the Chinese in Australia was created, later renamed the ‘Chinese Australia website’. Further information about Chinese Australian newspapers, the original Tung Wah Newspaper Index and other project outcomes have been <a href="http://arrow.latrobe.edu.au/store/3/4/5/5/1/public/index.htm">archived</a> by La Trobe University.
+			</p>
+			<p>
+				Copies of the <a href="http://trove.nla.gov.au/version/16575625">Tung Wah News</a> and <a href="http://trove.nla.gov.au/version/16567400">Tung Wah Times</a> can be found at the National Library of Australia in Canberra and in the State Library of New South Wales in Sydney.
+			</p>
+
+			
 		</div>
 		{% include 'tungwah/_sidebar.html' %}
 	</div>

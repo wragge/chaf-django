@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block meta %}{% endblock %}
-    <title>{% block page_title %}Chinese Australia Heritage Resources{% endblock %}</title>
+    <title>{% block page_title %}Chinese Australian Heritage Resources{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -30,7 +31,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Chinese Australia Resources</a>
+          <a class="navbar-brand" href="/">Chinese Australian Heritage Resources</a>
         </div>
         <div class="row">
         <div class="collapse navbar-collapse">
@@ -38,7 +39,7 @@
           <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="/tungwah">Tung Wah Times</a></li>
+            <li><a href="/tungwah">Tung Wah Index</a></li>
           </ul>
           </li>
         </ul>
@@ -48,7 +49,12 @@
     </div>
 
     {% block content %}{% endblock %}
-
+    <div class="container">
+      <footer>
+        <p><small>Chinese Australian Heritage Resources is managed by Kate Bagnall, Sophie Couchman and Tim Sherratt.</small><br>
+          <small>Contact us at <a href="mailto:admin@chineseaustralia.org">admin@chineseaustralia.org</a> or at PO Box 7160, Watson ACT 2602.</small></p>
+      </footer>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
