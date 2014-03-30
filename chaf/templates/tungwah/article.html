@@ -17,18 +17,18 @@
 	<meta name="BIBO.pages" content="{{ content.page }}{% if content.page_column %}, column {{ content.page_column }}{% endif %}">
 {% endblock %}
 {% block content %}
-<div class="container">
+<div class="container" typeof="schema:ItemPage">
 	{% include 'tungwah/_header.html' with child='Article' %}
-	<div class="row">
-		<div class="col-md-5 col-md-offset-2">
+	<div class="row" property="schema:about" resource="{{ identifier }}">
+		<div class="col-md-5 col-md-offset-2" typeof="schema:NewsItem" about="{{ identifier }}">
 			{% if content.title %}
 				<h2>{{ content.title }}</h2>
 			{% else %}
-				<h2>{{ content.description|truncatewords:10 }}</h2>
+				<h2 property="schema:name">{{ content.description|truncatewords:10 }}</h2>
 			{% endif %}
 			<dl class="dl-horizontal">
 				<dt>Date</dt>
-				<dd><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
+				<dd property="schema:datePublished"><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
 				<dt>Page</dt>
 				<dd>{{ content.page }}</dd>
 				{% if content.page_column %}
@@ -36,7 +36,7 @@
 					<dd>{{ content.page_column }}</dd>
 				{% endif %}
 				<dt>Description</dt>
-				<dd>{{ content.description }}</dd>
+				<dd property="schema:description">{{ content.description }}</dd>
 				{% if content.source %}
 					<dt>Source</dt>
 					<dd>{{ content.source }}</dd>
