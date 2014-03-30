@@ -30,19 +30,39 @@ class HomePageView(TemplateView):
         return context
 
 
-class ArticleView(LinkedDataView):
-    model = Article
-    path = '/tungwah/articles/%s'
-    template_name = 'tungwah/article'
+class NewspaperView(LinkedDataView):
 
-    def make_graph(self, entity):
+    def make_newspaper_nodes(self, date, graph, namespaces):
+        if date < datetime.date(1902, 8, 16):
+            this_newspaper = URIRef('http://trove.nla.gov.au/version/16575625')
+            newspaper = 'Tung Wah News'
+            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah News')))
+        else:
+            this_newspaper = URIRef('http://trove.nla.gov.au/version/16567400')
+            newspaper = 'Tung Wah Times'
+            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah Times')))
+        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['schema']['Organization']))
+        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
+        return (this_newspaper, newspaper, graph)
+
+    def get_namespaces(self, graph):
         namespaces = {}
-        graph = Graph()
         schemas = RDFSchema.objects.all()
         for schema in schemas:
             namespace = Namespace(schema.uri)
             graph.bind(schema.prefix, namespace)
             namespaces[schema.prefix] = namespace
+        return namespaces
+
+
+class ArticleView(NewspaperView):
+    model = Article
+    path = '/tungwah/articles/%s'
+    template_name = 'tungwah/article'
+
+    def make_graph(self, entity):
+        graph = Graph()
+        namespaces = self.get_namespaces(graph)
         host_ns = Namespace('http://%s' % (Site.objects.get_current().domain))
         this_article = URIRef(host_ns[entity.get_absolute_url()])
         graph.add((this_article, namespaces['rdf']['type'], namespaces['schema']['NewsArticle']))
@@ -52,19 +72,14 @@ class ArticleView(LinkedDataView):
         graph.add((this_article, namespaces['schema']['printPage'], Literal(str(entity.page))))
         graph.add((this_article, namespaces['schema']['printColumn'], Literal(str(entity.page_column))))
         graph.add((this_article, namespaces['schema']['datePublished'], Literal(str(entity.issue_date))))
-        if entity.issue_date < datetime.date(1902, 8, 16):
-            this_newspaper = URIRef('http://trove.nla.gov.au/version/16575625')
-            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah News')))
-        else:
-            this_newspaper = URIRef('http://trove.nla.gov.au/version/16567400')
-            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah Times')))
-        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['schema']['Organization']))
-        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
+        this_newspaper, newspaper, graph = self.make_newspaper_nodes(entity.issue_date, graph, namespaces)
         graph.add((this_article, namespaces['schema']['provider'], this_newspaper))
+        this_issue = URIRef(host_ns['/tungwah/issues/{}/'.format(entity.issue_date)])
+        graph.add((this_article, namespaces['dcterms']['isPartOf'], this_issue))
         return graph
 
 
-class IssueView(LinkedDataView):
+class IssueView(NewspaperView):
     model = Article
     path = '/tungwah/issues/%s'
     template_name = 'tungwah/issue'
@@ -85,30 +100,16 @@ class IssueView(LinkedDataView):
             return HttpResponse(content='')
 
     def make_graph(self, entity):
-        namespaces = {}
         graph = Graph()
-        schemas = RDFSchema.objects.all()
-        for schema in schemas:
-            namespace = Namespace(schema.uri)
-            graph.bind(schema.prefix, namespace)
-            namespaces[schema.prefix] = namespace
+        namespaces = self.get_namespaces(graph)
         host_ns = Namespace('http://%s' % (Site.objects.get_current().domain))
         this_issue = URIRef(host_ns['/tungwah/issues/{}/'.format(entity['issue'])])
+        this_newspaper, newspaper, graph = self.make_newspaper_nodes(entity['issue'], graph, namespaces)
         f_date = defaultfilters.date(entity['issue'], 'j F Y')
-        if entity['issue'] < datetime.date(1902, 8, 16):
-            this_newspaper = URIRef('http://trove.nla.gov.au/version/16575625')
-            newspaper = 'Tung Wah News'
-            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah News')))
-        else:
-            this_newspaper = URIRef('http://trove.nla.gov.au/version/16567400')
-            newspaper = 'Tung Wah Times'
-            graph.add((this_newspaper, namespaces['schema']['name'], Literal('The Tung Wah Times')))
         graph.add((this_issue, namespaces['rdf']['type'], namespaces['schema']['CreativeWork']))
         graph.add((this_issue, namespaces['rdf']['type'], namespaces['dcterms']['Issue']))
         graph.add((this_issue, namespaces['rdfs']['label'], Literal('{}, {}'.format(newspaper, f_date))))
         graph.add((this_issue, namespaces['schema']['datePublished'], Literal(str(entity['issue']))))
-        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['schema']['Organization']))
-        graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
         graph.add((this_issue, namespaces['schema']['provider'], this_newspaper))
         for article in entity['articles']:
             graph.add((this_issue, namespaces['dcterms']['hasPart'], URIRef(host_ns[article.get_absolute_url()])))
