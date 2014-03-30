@@ -36,7 +36,32 @@ In addition, a basic API provides Linked Open Data in RDF, JSON-LD and Turtle fo
 | JSON-LD | http://resources.chineseaustralia.org/tungwah/articles/35943.json/ |
 | Turtle | http://resources.chineseaustralia.org/tungwah/articles/35943.ttl/ |
 
+#### Issues
 
+| Type | URL |
+|------|-----|
+| Identifier | http://resources.chineseaustralia.org/tungwah/issues/1920-07-24/ |
+| HTML | http://resources.chineseaustralia.org/tungwah/issues/1920-07-24.html/ |
+| RDF | http://resources.chineseaustralia.org/tungwah/issues/1920-07-24.rdf/ |
+| JSON-LD | http://resources.chineseaustralia.org/tungwah/issues/1920-07-24.json/ |
+| Turtle | http://resources.chineseaustralia.org/tungwah/issues/1920-07-24.ttl/ |
 
+#### Issue list
 
+| Type | URL |
+|------|-----|
+| Identifier | http://resources.chineseaustralia.org/tungwah/issues/1909/results/?page=1 |
+| HTML | http://resources.chineseaustralia.org/tungwah/issues/1909/results.html/?page=1 |
+| RDF | http://resources.chineseaustralia.org/tungwah/issues/1909/results.rdf/?page=1 |
+| JSON-LD | http://resources.chineseaustralia.org/tungwah/issues/1909/results.json/?page=1 |
+| Turtle | http://resources.chineseaustralia.org/tungwah/issues/1909/results.ttl/?page=1/ |
 
+#### Search results
+
+| Type | URL |
+|------|-----|
+| Identifier | http://resources.chineseaustralia.org/tungwah/articles/results/?q=china&page=4&order_by=issue_date&year=1914 |
+| HTML | http://resources.chineseaustralia.org/tungwah/articles/results.html/?q=china&page=4&order_by=issue_date&year=1914 |
+| RDF | http://resources.chineseaustralia.org/tungwah/articles/results.rdf/?q=china&page=4&order_by=issue_date&year=1914 |
+| JSON-LD | http://resources.chineseaustralia.org/tungwah/articles/results.json/?q=china&page=4&order_by=issue_date&year=1914 |
+| Turtle | http://resources.chineseaustralia.org/tungwah/articles/results.ttl/?q=china&page=4&order_by=issue_date&year=1914 |
