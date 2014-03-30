@@ -45,15 +45,6 @@ class NewspaperView(LinkedDataView):
         graph.add((this_newspaper, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
         return (this_newspaper, newspaper, graph)
 
-    def get_namespaces(self, graph):
-        namespaces = {}
-        schemas = RDFSchema.objects.all()
-        for schema in schemas:
-            namespace = Namespace(schema.uri)
-            graph.bind(schema.prefix, namespace)
-            namespaces[schema.prefix] = namespace
-        return namespaces
-
 
 class ArticleView(NewspaperView):
     model = Article
@@ -178,5 +169,23 @@ class IssueListView(LinkedDataListView):
         else:
             results = self.model.objects.values('issue_date').annotate(num_articles=Count('issue_date')).distinct().order_by('issue_date')
         return results
+
+    def make_graph(self, entity):
+        graph = Graph()
+        namespaces = self.get_namespaces(graph)
+        host_ns = Namespace('http://%s' % (Site.objects.get_current().domain))
+        news = URIRef('http://trove.nla.gov.au/version/16575625')
+        graph.add((news, namespaces['schema']['name'], Literal('The Tung Wah News')))
+        times = URIRef('http://trove.nla.gov.au/version/16567400')
+        graph.add((times, namespaces['schema']['name'], Literal('The Tung Wah Times')))
+        graph.add((news, namespaces['rdf']['type'], namespaces['schema']['Organization']))
+        graph.add((news, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
+        graph.add((times, namespaces['rdf']['type'], namespaces['schema']['Organization']))
+        graph.add((times, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
+        for issue in entity.object_list:
+            this_issue = URIRef(host_ns['/tungwah/issues/{}/'.format(issue['issue_date'])])
+            if issue['issue_date'] < datetime.date(1902, 8, 16):
+                graph.add((news, namespaces['dcterms']['hasPart'], this_issue))
+        return graph
 
 

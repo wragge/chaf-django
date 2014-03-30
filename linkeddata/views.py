@@ -47,6 +47,15 @@ class LinkedDataView(ContentNegotiatedView):
         result = self.model.objects.select_related().get(id=id)
         return result
 
+    def get_namespaces(self, graph):
+        namespaces = {}
+        schemas = RDFSchema.objects.all()
+        for schema in schemas:
+            namespace = Namespace(schema.uri)
+            graph.bind(schema.prefix, namespace)
+            namespaces[schema.prefix] = namespace
+        return namespaces
+
     def render(self, request, context, template_name):
         """
         Returns a HttpResponse of the right media type as specified by the
@@ -160,6 +169,15 @@ class LinkedDataListView(LinkedDataView):
         results = self.model.objects.select_related().all()
         return results
 
+    def get_namespaces(self, graph):
+        namespaces = {}
+        schemas = RDFSchema.objects.all()
+        for schema in schemas:
+            namespace = Namespace(schema.uri)
+            graph.bind(schema.prefix, namespace)
+            namespaces[schema.prefix] = namespace
+        return namespaces
+
     @renderer(format='html', mimetypes=('text/html', 'application/xhtml+xml'), name='HTML', priority=1)
     def render_html(self, request, context, template_name):
         if context['content'] != None:
@@ -223,6 +241,15 @@ class LinkedDataSearchView(LinkedDataView):
             context['additional_headers'] = {'location': self.path}
             context['content'] = None
             return self.render(request, context, self.template_name)
+
+    def get_namespaces(self, graph):
+        namespaces = {}
+        schemas = RDFSchema.objects.all()
+        for schema in schemas:
+            namespace = Namespace(schema.uri)
+            graph.bind(schema.prefix, namespace)
+            namespaces[schema.prefix] = namespace
+        return namespaces
 
     @renderer(format='html', mimetypes=('text/html', 'application/xhtml+xml'), name='HTML', priority=1)
     def render_html(self, request, context, template_name):
