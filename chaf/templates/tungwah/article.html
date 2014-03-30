@@ -12,7 +12,11 @@
 	{% endif %}
 	<meta name="DCTERMS.date" content="{{ content.issue_date }}">
 	<meta name="DCTERMS.abstract" content="{{ content.description }}">
-	<meta name="DCTERMS.source" content="Tung Wah Times">
+	{% if content.issue_date < extra.tw_date %}
+		<meta name="DCTERMS.source" content="Tung Wah News">
+	{% else %}
+		<meta name="DCTERMS.source" content="Tung Wah Times">
+	{% endif %}
 	<meta name="DCTERMS.type" content="newspaperArticle">
 	<meta name="BIBO.pages" content="{{ content.page }}{% if content.page_column %}, column {{ content.page_column }}{% endif %}">
 {% endblock %}
@@ -27,8 +31,16 @@
 				<h2 property="schema:name">{{ content.description|truncatewords:10 }}</h2>
 			{% endif %}
 			<dl class="dl-horizontal">
+				<dt>Newspaper</dt>
+				<dd property="schema:provider" resource="http://trove.nla.gov.au/version/16575625">
+				{% if content.issue_date < extra.tw_date %}
+            		<a typeof="schema:Organization" href="http://trove.nla.gov.au/version/16575625"><span property="schema:name">Tung Wah News</span></a>
+            	{% else %}
+					<a typeof="schema:Organization" href="http://trove.nla.gov.au/version/16567400"><span property="schema:name">Tung Wah Times</span></a>
+				{% endif %}
+				</dd>
 				<dt>Date</dt>
-				<dd property="schema:datePublished"><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
+				<dd property="schema:datePublished" content="{{ content.issue_date|date:'c' }}"><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
 				<dt>Page</dt>
 				<dd>{{ content.page }}</dd>
 				{% if content.page_column %}

@@ -32,6 +32,11 @@ class HomePageView(TemplateView):
 
 class NewspaperView(LinkedDataView):
 
+    def get_extra(self, id):
+        extra = {}
+        extra['tw_date'] = datetime.date(1902, 8, 16)
+        return extra
+
     def make_newspaper_nodes(self, date, graph, namespaces):
         if date < datetime.date(1902, 8, 16):
             this_newspaper = URIRef('http://trove.nla.gov.au/version/16575625')

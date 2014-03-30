@@ -36,12 +36,16 @@ class LinkedDataView(ContentNegotiatedView):
         context = {}
         if fmt:
             context['content'] = self.get_item(id)
+            context['extra'] = self.get_extra(id)
             return self.render_to_format(request, context, self.template_name, fmt)
         else:
             context['status_code'] = 303
             context['additional_headers'] = {'location': self.path % id}
             context['content'] = None
             return self.render(request, context, self.template_name)
+
+    def get_extra(self, id):
+        return {}
 
     def get_item(self, id):
         result = self.model.objects.select_related().get(id=id)
