@@ -29,6 +29,20 @@
 			{% endif %}
 		</div>
 		{% include 'tungwah/_sidebar.html' %}
+		<div class="col-md-8 col-md-offset-2">
+			<dl class="dl-horizontal">
+				{% with q=request.GET.q order=request.GET.order_by year=request.GET.year page=request.GET.page %}
+					<dt>Identifier</dt>
+					<dd property="schema:url"><a href="{{ identifier }}?q={{ q }}&page={{ page }}{% if order %}&order_by={{ order }}{% endif %}{% if year %}&year={{ year }}{% endif %}">{{ identifier }}?q={{ q }}&page={{ page }}{% if order %}&order_by={{ order }}{% endif %}{% if year %}&year={{ year }}{% endif %}</a></dd>
+					<dt>Formats</dt>
+					<dd>
+						<a href="{{ identifier|slice:":-1" }}.rdf/?q={{ q }}&page={{ page }}{% if order %}&order_by={{ order }}{% endif %}{% if year %}&year={{ year }}{% endif %}">RDF</a> &middot; 
+						<a href="{{ identifier|slice:":-1" }}.json/?q={{ q }}&page={{ page }}{% if order %}&order_by={{ order }}{% endif %}{% if year %}&year={{ year }}{% endif %}">JSON-LD</a> &middot; 
+						<a href="{{ identifier|slice:":-1" }}.ttl/?q={{ q }}&page={{ page }}{% if order %}&order_by={{ order }}{% endif %}{% if year %}&year={{ year }}{% endif %}">Turtle</a>
+					</dd>
+				{% endwith %}
+			</dl>
+		</div>
 	</div>
 </div>
 {% endblock %}

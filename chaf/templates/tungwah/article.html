@@ -19,6 +19,9 @@
 	{% endif %}
 	<meta name="DCTERMS.type" content="newspaperArticle">
 	<meta name="BIBO.pages" content="{{ content.page }}{% if content.page_column %}, column {{ content.page_column }}{% endif %}">
+	<link rel="alternate" type="application/rdf+xml" href="{{ identifier|slice:":-1" }}.rdf/" />
+	<link rel="alternate" type="application/json" href="{{ identifier|slice:":-1" }}.json/" />
+	<link rel="alternate" type="text/turtle" href="{{ identifier|slice:":-1" }}.ttl/" />
 {% endblock %}
 {% block content %}
 <div class="container" typeof="schema:ItemPage">
@@ -54,9 +57,17 @@
 					<dd>{{ content.source }}</dd>
 				{% endif %}
 			</dl>
-
 		</div>
 		{% include 'tungwah/_sidebar.html' %}
+		<div class="col-md-8 col-md-offset-2">
+			<dl class="dl-horizontal">
+				<dt>Identifier</dt>
+				<dd property="schema:url">{{ identifier|urlize }}</dd>
+				<dt>Formats</dt>
+				<dd><a href="{{ identifier|slice:":-1" }}.rdf/">RDF</a> &middot; <a href="{{ identifier|slice:":-1" }}.json/">JSON-LD</a> &middot; <a href="{{ identifier|slice:":-1" }}.ttl/">Turtle</a></dd>
+
+			</dl>
+		</div>
 	</div>
 </div>
 {% endblock %}

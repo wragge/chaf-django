@@ -23,6 +23,20 @@
 			{% endif %}
 		</div>
 		{% include 'tungwah/_sidebar.html' %}
+		<div class="col-md-8 col-md-offset-2">
+			<dl class="dl-horizontal">
+				{% with q=request.GET.q order=request.GET.order_by year=request.GET.year page=request.GET.page %}
+					<dt>Identifier</dt>
+					<dd property="schema:url"><a href="{{ identifier }}?page={{ page }}">{{ identifier }}?page={{ page }}</a></dd>
+					<dt>Formats</dt>
+					<dd>
+						<a href="{{ identifier|slice:":-1" }}.rdf/?page={{ page }}">RDF</a> &middot; 
+						<a href="{{ identifier|slice:":-1" }}.json/?page={{ page }}">JSON-LD</a> &middot; 
+						<a href="{{ identifier|slice:":-1" }}.ttl/?page={{ page }}">Turtle</a>
+					</dd>
+				{% endwith %}
+			</dl>
+		</div>
 	</div>
 </div>
 {% endblock %}

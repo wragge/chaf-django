@@ -88,7 +88,7 @@ class IssueView(NewspaperView):
     def render_html(self, request, context, template_name):
         if context['content']:
             template_name = self.join_template_name(template_name, 'html')
-            identifier = 'http://%s%s' % (Site.objects.get_current().domain, context['content']['issue'])
+            identifier = 'http://{}/tungwah/issues/{}/'.format(Site.objects.get_current().domain, context['content']['issue'])
             context['identifier'] = identifier
             #context['id_path'] = identifier[:-1]
             return render_to_response(template_name, context, context_instance=RequestContext(request), content_type='text/html')
