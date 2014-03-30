@@ -158,7 +158,6 @@ class ArticleSearchView(LinkedDataSearchView):
             this_article = URIRef(host_ns[article.object.get_absolute_url()])
             graph.add((this_article, namespaces['rdfs']['label'], Literal(str(article.object))))
             graph.add((this_article, namespaces['schema']['name'], Literal(str(article.object))))
-            graph.add((this_issue, namespaces['dcterms']['hasPart'], this_article))
             graph.add((this_article, namespaces['schema']['description'], Literal(str(article.object.description))))
             graph.add((this_article, namespaces['schema']['printPage'], Literal(str(article.object.page))))
             graph.add((this_article, namespaces['schema']['printColumn'], Literal(str(article.object.page_column))))
