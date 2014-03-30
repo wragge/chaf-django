@@ -148,6 +148,8 @@ class ArticleSearchView(LinkedDataSearchView):
         graph.add((times, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
         for article in entity.object_list:
             this_article = URIRef(host_ns[article.object.get_absolute_url()])
+            graph.add((this_article, namespaces['rdfs']['label'], Literal(str(article.object))))
+            graph.add((this_article, namespaces['schema']['name'], Literal(str(article.object))))
             if article.object.issue_date < datetime.date(1902, 8, 16):
                 graph.add((news, namespaces['dcterms']['hasPart'], this_article))
             else:
@@ -204,10 +206,14 @@ class IssueListView(LinkedDataListView):
         graph.add((times, namespaces['rdf']['type'], namespaces['bibo']['Newspaper']))
         for issue in entity.object_list:
             this_issue = URIRef(host_ns['/tungwah/issues/{}/'.format(issue['issue_date'])])
+            f_date = defaultfilters.date(issue['issue_date'], 'j F Y')
             if issue['issue_date'] < datetime.date(1902, 8, 16):
                 graph.add((news, namespaces['dcterms']['hasPart'], this_issue))
+                newspaper = 'Tung Wah News'
             else:
                 graph.add((times, namespaces['dcterms']['hasPart'], this_issue))
+                newspaper = 'Tung Wah Times'
+            graph.add((this_issue, namespaces['schema']['name'], Literal('{}, {}'.format(newspaper, f_date))))
         return graph
 
 
