@@ -177,6 +177,17 @@ class ArticleSearchView(LinkedDataSearchView):
                 graph.add((times, namespaces['dcterms']['hasPart'], this_article))
         return graph
 
+    @renderer(format='html', mimetypes=('text/html', 'application/xhtml+xml'), name='HTML', priority=1)
+    def render_html(self, request, context, template_name):
+        if context['content'] != None:
+            template_name = self.join_template_name(template_name, 'html')
+            identifier = 'http://{}{}'.format(Site.objects.get_current().domain, self.path.replace('results', ''))
+            context['identifier'] = identifier
+            context['id_path'] = identifier[:-1]
+            return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype='text/html')
+        else:
+            return HttpResponse(content='')
+
 
 class IssueListView(LinkedDataListView):
     model = Article
@@ -236,5 +247,16 @@ class IssueListView(LinkedDataListView):
                 newspaper = 'Tung Wah Times'
             graph.add((this_issue, namespaces['schema']['name'], Literal('{}, {}'.format(newspaper, f_date))))
         return graph
+
+    @renderer(format='html', mimetypes=('text/html', 'application/xhtml+xml'), name='HTML', priority=1)
+    def render_html(self, request, context, template_name):
+        if context['content'] != None:
+            template_name = self.join_template_name(template_name, 'html')
+            identifier = 'http://{}{}'.format(Site.objects.get_current().domain, self.path.replace('results', ''))
+            context['identifier'] = identifier
+            context['id_path'] = identifier[:-1]
+            return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype='text/html')
+        else:
+            return HttpResponse(content='')
 
 

@@ -50,7 +50,7 @@ In addition, a basic API provides Linked Open Data in RDF, JSON-LD and Turtle fo
 
 | Type | URL |
 |------|-----|
-| Identifier | http://resources.chineseaustralia.org/tungwah/issues/1909/results/?page=1 |
+| Identifier | http://resources.chineseaustralia.org/tungwah/issues/1909/?page=1 |
 | HTML | http://resources.chineseaustralia.org/tungwah/issues/1909/results.html/?page=1 |
 | RDF | http://resources.chineseaustralia.org/tungwah/issues/1909/results.rdf/?page=1 |
 | JSON-LD | http://resources.chineseaustralia.org/tungwah/issues/1909/results.json/?page=1 |
@@ -60,7 +60,7 @@ In addition, a basic API provides Linked Open Data in RDF, JSON-LD and Turtle fo
 
 | Type | URL |
 |------|-----|
-| Identifier | http://resources.chineseaustralia.org/tungwah/articles/results/?q=china&page=4&order_by=issue_date&year=1914 |
+| Identifier | http://resources.chineseaustralia.org/tungwah/articles/?q=china&page=4&order_by=issue_date&year=1914 |
 | HTML | http://resources.chineseaustralia.org/tungwah/articles/results.html/?q=china&page=4&order_by=issue_date&year=1914 |
 | RDF | http://resources.chineseaustralia.org/tungwah/articles/results.rdf/?q=china&page=4&order_by=issue_date&year=1914 |
 | JSON-LD | http://resources.chineseaustralia.org/tungwah/articles/results.json/?q=china&page=4&order_by=issue_date&year=1914 |
