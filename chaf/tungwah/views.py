@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.template import defaultfilters
 from isodate import parse_date
 import datetime
+import random
 from linkeddata.views import LinkedDataView, LinkedDataListView, LinkedDataSearchView
 from linkeddata.models import *
 from rdflib import Graph
@@ -23,9 +24,12 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
-        articles = Article.objects.all().order_by('?')
-        context['num_articles'] = len(articles)
-        context['article'] = articles[0]
+        #articles = Article.objects.all().order_by('?')
+        count = Article.objects.all().count()
+        #context['num_articles'] = len(articles)
+        #context['article'] = articles[0]
+        context['num_articles'] = count
+        context['article'] = Article.objects.get(pk=random.randint(1, count))
         context['num_issues'] = Article.objects.values_list('issue_date', flat=True).distinct().count()
         return context
 
