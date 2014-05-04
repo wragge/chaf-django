@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap_pagination %}
+{% block extra_scripts %}
+	<script src="/static/threads/js/script.js"></script>
+{% endblock %}
+{% block page_title %}Threads of Kinship{% endblock %}
+{% block meta %}
+
+{% endblock %}
+{% block content %}
+<div class="container" typeof="schema:ItemPage">
+	{% include 'threads/_header.html'%}
+	<div class="row" property="schema:about" resource="{{ identifier }}">
+		<div class="col-md-5 col-md-offset-2" typeof="schema:NewsItem" about="{{ identifier }}">
+			<p>Details go here...</p>
+		</div>
+		{% include 'threads/_sidebar.html' %}
+		<div class="col-md-8 col-md-offset-2">
+			
+		</div>
+	</div>
+</div>
+{% endblock %}

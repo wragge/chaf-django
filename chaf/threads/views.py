@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.base import TemplateView
 from linkeddata.views import LinkedDataView, LinkedDataListView, LinkedDataSearchView
 from linkeddata.models import *
 from rdflib import Graph
@@ -7,6 +8,9 @@ from haystack.query import SearchQuerySet
 from chaf.threads.models import BirthRegistration, MarriageRegistration
 from chaf.threads.forms import ThreadsSearchForm
 
+
+class HomePageView(TemplateView):
+    template_name = "threads/home.html"
 
 class BirthRegistrationView(LinkedDataView):
 	model = BirthRegistration

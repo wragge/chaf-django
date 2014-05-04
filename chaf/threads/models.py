@@ -88,6 +88,7 @@ class BirthRegistration(models.Model):
 	mother_age = models.CharField(max_length=50, blank=True, null=True)
 	#other
 	marriage_date = models.CharField(max_length=50, blank=True, null=True)
+	marriage_place = models.CharField(max_length=200, blank=True, null=True)
 	previous_children = models.CharField(max_length=200, blank=True, null=True)
 
 	def __unicode__(self):
