@@ -4,8 +4,14 @@
 			<h1>Threads of Kinship</h1>
 			{% if child %}
 			<ol class="breadcrumb">
-	  			<li><a href="/threads/registrations/?order_by=alpha_sort">Home</a></li>
+				<li><a href="/threads/">Home</a></li>
+	  			<li><a href="/threads/registrations/?order_by=alpha_sort">Registrations</a></li>
 	  			<li class="active">{{ child }}</li>
+			</ol>
+			{% else %}
+			<ol class="breadcrumb">
+				<li><a href="/threads/">Home</a></li>
+	  			<li class="active">Registrations</li>
 			</ol>
 			{% endif %}
 		</header>

@@ -12,6 +12,7 @@
 	{% include 'threads/_header.html' with child='Marriage'%}
 	<div class="row" property="schema:about" resource="{{ identifier }}">
 		<div class="col-md-5 col-md-offset-2" typeof="schema:NewsItem" about="{{ identifier }}">
+			<span class="label label-primary">Marriage</span>
 			<h2>{{ content.index_spouse1_firstname }} {{ content.index_spouse1_surname }} <span class="text-muted">and</span> {{ content.index_spouse2_firstname }} {{ content.index_spouse2_surname }}</h2>
 			<dl class="dl-horizontal">
 				<dt>Year</dt>

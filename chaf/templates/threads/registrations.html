@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
 <div class="container" typeof="schema:ItemPage">
-	{% include 'threads/_header.html'%}
+	{% include 'threads/_header.html' %}
 	<div class="row" property="schema:about" resource="{{ identifier }}">
 		<div class="col-md-5 col-md-offset-2" typeof="schema:NewsItem" about="{{ identifier }}">
 			<h2>{{ content.title }}</h2>
