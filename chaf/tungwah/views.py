@@ -14,6 +14,7 @@ from linkeddata.models import *
 from rdflib import Graph
 from rdflib import Namespace, BNode, Literal, RDF, URIRef
 from django_conneg.decorators import renderer
+from haystack.query import SearchQuerySet
 from chaf.tungwah.models import *
 from chaf.tungwah.forms import *
 
@@ -144,12 +145,13 @@ class ArticleListView(LinkedDataListView):
         return graph
 
 class ArticleSearchView(LinkedDataSearchView):
+    searchqueryset = SearchQuerySet().models(Article)
     form_class = ArticleSearchForm
     path = '/tungwah/articles/results'
     template_name = 'tungwah/articles'
     params = [{'name': 'q', 'default': ''}, {'name': 'page', 'default': 1}, {'name': 'year', 'default': None}, {'name': 'order_by', 'default': None}]
     default_order = 'issue_date'
-    facets = ['year']
+    facets = [('year', 'index')]
 
     def make_graph(self, entity):
         graph = Graph()

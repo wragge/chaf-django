@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load bootstrap_pagination %}
+{% block extra_scripts %}
+	<script src="/static/threads/js/script.js"></script>
+{% endblock %}
+{% block page_title %}Threads of Kinship{% endblock %}
+{% block meta %}
+
+{% endblock %}
+{% block content %}
+<div class="container" typeof="schema:ItemPage">
+	<div class="row" property="schema:about" resource="{{ identifier }}">
+		<div class="col-md-5 col-md-offset-2" typeof="schema:NewsItem" about="{{ identifier }}">
+			<h2>{{ content.title }}</h2>
+			{% if content.has_previous or content.has_next %}
+				<p>Page {{ content.number }} of {{ content.paginator.num_pages }}</p>
+				 {% bootstrap_pager content previous_label="&larr; Previous" next_label="Next &rarr;" %}
+			{% endif %}
+			<div class="list-group">
+			{% for birth in content.object_list %}
+				<a class="list-group-item" href="{{ birth.object.get_absolute_url }}">
+					{{ birth.index_child_surname }}, {{ birth.index_child_firstname }}<br>
+					<span class="text-muted">{{ birth.index_registration_place }}, {{ birth.index_year }}</span>
+				</a>
+			{% endfor %}
+			</div>
+			{% if content.has_previous or content.has_next %}
+				{% bootstrap_paginate content range=5 show_first_last="true" previous_label="&lsaquo;" next_label="&rsaquo;" %}
+			{% endif %}
+		</div>
+		{% include 'threads/_sidebar.html' %}
+		<div class="col-md-8 col-md-offset-2">
+			
+		</div>
+	</div>
+</div>
+{% endblock %}

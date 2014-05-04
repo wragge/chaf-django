@@ -1,0 +1,80 @@
+	<div class="col-md-3">
+		<h5>Search registrations</h5>
+		<form method="get" action="{% url 'registration-list' %}">
+			<div class="input-group">
+		      <input name="q" id="q" type="search" class="form-control"{% if query %} value="{{ query }}"{% endif %}>
+		      <span class="input-group-btn">
+		        <button class="btn btn-primary " type="submit">Search</button>
+		      </span>
+		    </div>
+		
+			{% if content.num_articles %}
+		    	<p class="small text-muted">{{ num_articles }} registrations</p>
+		    {% endif %}
+		    {% if content.paginator %}
+		    	<p class="small text-muted">{{ paginator.count }} matching registrations</p>
+		    
+			    <div class="row">
+			    	<div class="col-md-10 col-md-offset-2">
+					    <h6>Sort</h6>
+					    <select name="order_by" id="order_by">
+					    	<option value="">Relevance</option>
+					    	<option {% if request.GET.order_by == 'year' %}selected="selected" {% endif %}value="year">Year</option>
+					    	<option {% if request.GET.order_by == 'alpha_sort' %}selected="selected" {% endif %}value="alpha_sort">Name</option>
+					    </select>
+					</div>
+				</div>
+			{% endif %}
+	    </form>
+	    {% if facets.fields.type %}
+	    <div class="row">
+	    	<div class="col-md-10 col-md-offset-2">
+			    <h6>Filter by type</h6>
+			    <div class="list-group">
+			    {% for type in facets.fields.type %}
+			    	{% if request.GET.type %}
+			    	<a class="list-group-item active" href="/threads/registrations/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}{% if request.GET.place %}&place={{ request.GET.place }}{% endif %}">{{ type.0 }} <span class="badge">{{ type.1 }}</span></a>
+			    	{% else %}
+			    	<a class="list-group-item" href="/threads/registrations/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}{% if request.GET.place %}&place={{ request.GET.place }}{% endif %}&type={{ type.0 }}">{{ type.0 }} <span class="badge">{{ type.1 }}</span></a>
+			    	{% endif %}
+			    {% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	    {% if facets.fields.year %}
+	    <div class="row">
+	    	<div class="col-md-10 col-md-offset-2">
+			    <h6>Filter by year</h6>
+			    <div class="list-group">
+			    {% for year in facets.fields.year %}
+			    	{% if request.GET.year %}
+			    	<a class="list-group-item active" href="/threads/registrations/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.place %}&place={{ request.GET.place }}{% endif %}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
+			    	{% else %}
+			    	<a class="list-group-item" href="/threads/registrations/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.place %}&place={{ request.GET.place }}{% endif %}&year={{ year.0 }}">{{ year.0 }} <span class="badge">{{ year.1 }}</span></a>
+			    	{% endif %}
+			    {% endfor %}
+				</div>
+			</div>
+		</div>
+	    {% endif %}
+		{% if facets.fields.place %}
+	    <div class="row">
+	    	<div class="col-md-10 col-md-offset-2">
+			    <h6>Filter by place</h6>
+			    <div class="list-group">
+			    {% for place in facets.fields.place %}
+			    	{% if request.GET.place %}
+			    	<a class="list-group-item active" href="/threads/registrations/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">{{ place.0 }} <span class="badge">{{ place.1 }}</span></a>
+			    	{% else %}
+			    	<a class="list-group-item" href="/threads/registrations/results.html?q={{ request.GET.q }}{% if request.GET.order_by %}&order_by={{ request.GET.order_by }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}&place={{ place.0 }}">{{ place.0 }} <span class="badge">{{ place.1 }}</span></a>
+			    	{% endif %}
+			    {% endfor %}
+				</div>
+			</div>
+		</div>
+	    {% endif %}
+	    <p class="licence">
+	    	<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0; margin-bottom: 10px;" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Threads of Kinship</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+	    </p>
+	</div>

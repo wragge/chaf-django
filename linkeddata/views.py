@@ -215,7 +215,7 @@ class LinkedDataSearchView(LinkedDataView):
                 results = form.no_query_found()
             if self.facets:
                 for facet in self.facets:
-                    results = results.facet(facet, mincount=1, sort='index')
+                    results = results.facet(facet[0], mincount=1, sort=facet[1])
                 context['facets'] = results.facet_counts()
             paginator = Paginator(results, 25)
             page = request.GET.get('page', '1')
@@ -232,7 +232,7 @@ class LinkedDataSearchView(LinkedDataView):
             return self.render_to_format(request, context, self.template_name, fmt)
         else:
             params = []
-            if request.GET.get('q') == '' and not request.GET.get('order_by'):
+            if not request.GET.get('q') and not request.GET.get('order_by'):
                 params.append('order_by={}'.format(self.default_order))
             for param in self.params:
                 print param['name']

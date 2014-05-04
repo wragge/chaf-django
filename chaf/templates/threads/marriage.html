@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load more_like_this %}
+{% block extra_scripts %}
+	<script src="/static/threads/js/script.js"></script>
+{% endblock %}
+{% block page_title %}Threads of Kinship{% endblock %}
+{% block meta %}
+
+{% endblock %}
+{% block content %}
+<div class="container" typeof="schema:ItemPage">
+	{% include 'threads/_header.html' with child='Marriage'%}
+	<div class="row" property="schema:about" resource="{{ identifier }}">
+		<div class="col-md-5 col-md-offset-2" typeof="schema:NewsItem" about="{{ identifier }}">
+			<h2>{{ content.index_spouse1_firstname }} {{ content.index_spouse1_surname }} <span class="text-muted">and</span> {{ content.index_spouse2_firstname }} {{ content.index_spouse2_surname }}</h2>
+			<dl class="dl-horizontal">
+				<dt>Year</dt>
+				<dd>{{ content.index_year }}</dd>
+				<dt>Place</dt>
+				<dd><a href="{% url 'registration-list' %}results.html/?place={{ content.index_registration_place }}&order_by=alpha_sort">{{ content.index_registration_place }}</a></dd>
+				<dt>Registration</dt>
+				<dd>{{ content.reg_number }}/{{ content.reg_year }}</dd>
+
+			</dl>
+		</div>
+		{% include 'threads/_sidebar.html' %}
+		<div class="col-md-8 col-md-offset-2">
+			
+		</div>
+	</div>
+</div>
+{% endblock %}

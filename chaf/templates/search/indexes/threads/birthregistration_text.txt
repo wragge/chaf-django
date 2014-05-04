@@ -1,0 +1,4 @@
+{{ object.index_child_surname }}
+{{ object.index_child_firstname }}
+{{ object.index_father_firstname }}
+{{ object.index_mother_firstname }}

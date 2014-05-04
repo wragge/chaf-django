@@ -1,0 +1,4 @@
+{{ object.index_spouse1_surname }}
+{{ object.index_spouse2_surname }}
+{{ object.index_spouse1_firstname }}
+{{ object.index_spouse2_firstname }}
