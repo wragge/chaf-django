@@ -16,7 +16,7 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('chaf.tungwah.views',
-	url(r'^tungwah/$', HomePageView.as_view(), name="tungwah-home"),
+	url(r'^tungwah/$', TungwahHomePageView.as_view(), name="tungwah-home"),
     url(r'^tungwah/articles/$', ArticleSearchView.as_view(), name="article_list"),
     url(r'^tungwah/articles/results\.(?P<fmt>(html|rdf|json|ttl))/$', ArticleSearchView.as_view()),
     url(r'^tungwah/articles/(?P<id>\d+)\.(?P<fmt>(html|rdf|json|ttl))/$', ArticleView.as_view()),
@@ -35,7 +35,7 @@ urlpatterns += patterns('chaf.tungwah.views',
 )
 
 urlpatterns += patterns('chaf.threads.views',
-    url(r'^threads/$', HomePageView.as_view(), name="threads-home"),
+    url(r'^threads/$', ThreadsHomePageView.as_view(), name="threads-home"),
     url(r'^threads/registrations/$', ThreadsSearchView.as_view(), name="registration-list"),
     url(r'^threads/registrations/results\.(?P<fmt>(html|rdf|json|ttl))/$', ThreadsSearchView.as_view()),
     url(r'^threads/births/(?P<id>\d+)\.(?P<fmt>(html|rdf|json|ttl))/$', BirthRegistrationView.as_view()),

@@ -9,7 +9,7 @@ from chaf.threads.models import BirthRegistration, MarriageRegistration
 from chaf.threads.forms import ThreadsSearchForm
 
 
-class HomePageView(TemplateView):
+class ThreadsHomePageView(TemplateView):
     template_name = "threads/home.html"
 
 class BirthRegistrationView(LinkedDataView):

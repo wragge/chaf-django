@@ -19,12 +19,12 @@ from chaf.tungwah.models import *
 from chaf.tungwah.forms import *
 
 
-class HomePageView(TemplateView):
+class TungwahHomePageView(TemplateView):
 
     template_name = "tungwah/home.html"
 
     def get_context_data(self, **kwargs):
-        context = super(HomePageView, self).get_context_data(**kwargs)
+        context = super(TungwahHomePageView, self).get_context_data(**kwargs)
         #articles = Article.objects.all().order_by('?')
         count = Article.objects.all().count()
         #context['num_articles'] = len(articles)
