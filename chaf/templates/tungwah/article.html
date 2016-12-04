@@ -45,7 +45,7 @@
 				<dt>Date</dt>
 				<dd property="schema:datePublished" content="{{ content.issue_date|date:'c' }}"><a href="{% url 'issue-view' content.issue_date|date:'c' %}">{{ content.issue_date|date:"j F Y" }}</a></dd>
 				<dt>Page</dt>
-				<dd>{{ content.page }}</dd>
+				<dd>{{ content.page }}{% if content.get_page_url %}<a href="{{ content.get_page_url }}" class="pull-right btn btn-xs btn-primary">View on Trove</a>{% endif %}</dd>
 				{% if content.page_column %}
 					<dt>Column</dt>
 					<dd>{{ content.page_column }}</dd>

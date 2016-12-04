@@ -14,7 +14,7 @@
 			{% regroup content.articles by page as articles %}
 
 			{% for page in articles %}
-			<h4>Page {{ page.grouper }}</h4>
+			<h4>Page {{ page.grouper }} {% if page.list.0.get_page_url %}<a href="{{ page.list.0.get_page_url }}" class="pull-right btn btn-xs btn-primary">View on Trove</a>{% endif %}</h4>
 				<div class="list-group">
 					{% for article in page.list %}
 						<a href="{% url 'article-view' article.id %}" class="list-group-item">{{ article.description|truncatewords:20 }}</a>
